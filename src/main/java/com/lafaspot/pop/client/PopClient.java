@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import com.lafaspot.logfast.logging.LogContext;
 import com.lafaspot.logfast.logging.LogManager;
 import com.lafaspot.logfast.logging.Logger;
+import com.lafaspot.pop.netty.PopClientInitializer;
 import com.lafaspot.pop.session.PopSession;
 import com.lafaspot.pop.session.SessionLogContext;
 
@@ -39,12 +40,6 @@ public class PopClient {
     /** Event loop group that will serve all channels for IMAP client. */
     private final EventLoopGroup group;
 
-    /** Server connect timeout. */
-    private final int connectTimeout;
-
-    /** Channel inactivity timeout. */
-    private final int inactivityTimeout;
-
     /** The log manger. */
     private final LogManager logManager;
 
@@ -55,17 +50,13 @@ public class PopClient {
      * Constructor to create a new POP client.
      *
      * @param threads number of threads to use
-     * @param connectTimeout server connect timeout
-     * @param inactivityTimeout channel inacitivty timeout
      * @param logManager the log manager
      */
-    public PopClient(final int threads, final int connectTimeout, final int inactivityTimeout, @Nonnull final LogManager logManager) {
+    public PopClient(final int threads, @Nonnull final LogManager logManager) {
 
         try {
             this.bootstrap = new Bootstrap();
             this.group = new NioEventLoopGroup(threads);
-            this.connectTimeout = connectTimeout;
-            this.inactivityTimeout = inactivityTimeout;
             bootstrap.group(group).channel(NioSocketChannel.class).handler(new PopClientInitializer());
 
             this.logManager = logManager;

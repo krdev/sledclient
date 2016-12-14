@@ -1,4 +1,4 @@
-package com.lafaspot.pop.client;
+package com.lafaspot.pop.netty;
 
 
 import io.netty.channel.ChannelInitializer;
