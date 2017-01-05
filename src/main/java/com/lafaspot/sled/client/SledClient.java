@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.lafaspot.pop.client;
+package com.lafaspot.sled.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.EventLoopGroup;
@@ -16,9 +16,6 @@ import javax.annotation.Nonnull;
 import com.lafaspot.logfast.logging.LogContext;
 import com.lafaspot.logfast.logging.LogManager;
 import com.lafaspot.logfast.logging.Logger;
-import com.lafaspot.pop.netty.PopClientInitializer;
-import com.lafaspot.pop.session.PopSession;
-import com.lafaspot.pop.session.SessionLogContext;
 
 /**
  * POP client that supports secure connection and POP3 protocol.
@@ -26,7 +23,7 @@ import com.lafaspot.pop.session.SessionLogContext;
  * @author kraman
  *
  */
-public class PopClient {
+public class SledClient {
 
     /** instance id used for debug. */
     private final String instanceId = Integer.toString(new Random(System.nanoTime()).nextInt());
@@ -51,24 +48,31 @@ public class PopClient {
      *
      * @param threads number of threads to use
      * @param logManager the log manager
+     * @throws SledException
      */
-    public PopClient(final int threads, @Nonnull final LogManager logManager) {
+    public SledClient(final int threads, @Nonnull final LogManager logManager) throws SledException {
 
         try {
             this.bootstrap = new Bootstrap();
             this.group = new NioEventLoopGroup(threads);
-            bootstrap.group(group).channel(NioSocketChannel.class).handler(new PopClientInitializer());
+            bootstrap.channel(NioSocketChannel.class);
+            bootstrap.group(group);
+            bootstrap.handler(new SledClientInitializer(logger));
 
             this.logManager = logManager;
-            LogContext context = new SessionLogContext("PopClient");
+            LogContext context = new SessionLogContext("SledClient");
             this.logger = logManager.getLogger(context);
+
         } finally {
-            this.group.shutdownGracefully();
         }
     }
 
-    public PopSession createSession(@Nonnull final String server, final int port) {
-        return new PopSession(bootstrap, server, port, logger);
+    public SledSession createSession(@Nonnull final String server, final int port) {
+        return new SledSession(bootstrap, server, port, logger);
+    }
+
+    public void shutdown() {
+        this.group.shutdown();
     }
 
 }

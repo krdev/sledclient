@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.lafaspot.pop.session;
+package com.lafaspot.sled.client;
 
 import javax.annotation.concurrent.Immutable;
 

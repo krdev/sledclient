@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<<<<<<< Upstream, based on origin/master
     <groupId>com.github.krdev.sledclient</groupId>
     <artifactId>sledclient</artifactId>
     <version>0.0.1</version>
@@ -594,14 +593,13 @@
         </profile>
     </profiles>
 </project>
-=======
-    <groupId>com.github.krdev.pop3sclient</groupId>
-    <artifactId>pop3sclient</artifactId>
-    <version>0.0.1</version>
-    <name>pop3sclient</name>
+    <groupId>com.github.krdev.sledclient</groupId>
+    <artifactId>sledclient</artifactId>
+    <version>1.0.0</version>
+    <name>sledclient</name>
     <packaging>jar</packaging>
-    <url>https://github.com/lafaspot/pop3sclient</url>
-    <description>Asynchronous POP client.</description>
+    <url>https://github.com/krdev/sledclient</url>
+    <description>Asynchronous sled client.</description>
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>
@@ -619,10 +617,10 @@
         </developer>
     </developers>
     <scm>
-        <developerConnection>scm:git:https://github.com/lafaspot/pop3sclient.git</developerConnection>
-        <connection>scm:git:https://github.com/lafaspot/pop3sclient.git</connection>
-        <url>https://github.com/lafaspot/pop3sclient.git</url>
-        <tag>pop3sclient-.1</tag>
+        <developerConnection>scm:git:https://github.com/krdev/sledclient.git</developerConnection>
+        <connection>scm:git:https://github.com/krdev/sledclient.git</connection>
+        <url>https://github.com/krdev/sledclient.git</url>
+        <tag>sledclient-.1</tag>
     </scm>
     <licenses>
         <license>
@@ -644,7 +642,7 @@
     </distributionManagement>
 
     <properties>
-        <project-name>pop3sclient</project-name>
+        <project-name>sledclient</project-name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
         <excludedJNILibraries />
@@ -685,11 +683,11 @@
             <version>1.7.21</version>
         </dependency>
 
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-handler</artifactId>
-                <version>4.1.4.Final</version>
-            </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-handler</artifactId>
+            <version>4.1.4.Final</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -731,11 +729,8 @@
             <version>1.0.6</version>
         </dependency>
 
-        <!--  dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.1.3</version>
-        </dependency -->
+        <!-- dependency> <groupId>ch.qos.logback</groupId> <artifactId>logback-classic</artifactId> 
+            <version>1.1.3</version> </dependency -->
     </dependencies>
 
     <build>
@@ -743,6 +738,14 @@
         <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            ...
+          </configuration>
+        </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
@@ -1169,6 +1172,26 @@
             </activation>
             <build>
                 <plugins>
+                
+                
+                    <!-- any other plugins -->
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </plugin>
+                    
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -1182,9 +1205,14 @@
                             </execution>
                         </executions>
                     </plugin>
+
                 </plugins>
+
             </build>
         </profile>
     </profiles>
 </project>
+<<<<<<< Upstream, based on origin/master
 >>>>>>> ab8a7e7 Added basic objects for PopClient
+=======
+>>>>>>> bcb3f3e First version basic client.

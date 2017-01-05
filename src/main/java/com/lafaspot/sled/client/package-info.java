@@ -5,4 +5,4 @@
  * @author kraman
  *
  */
-package com.lafaspot.pop.client;
+package com.lafaspot.sled.client;

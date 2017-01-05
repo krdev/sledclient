@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.lafaspot.pop.exception;
+package com.lafaspot.sled.client;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9,23 +9,23 @@ import javax.annotation.Nullable;
  * @author kraman
  *
  */
-public class PopException extends Exception {
+public class SledException extends Exception {
 
     private String message = null;
 
     private Type type;
 
-    public PopException(@Nonnull Type type) {
+    public SledException(@Nonnull Type type) {
         super(type.toString());
         this.type = type;
     }
 
-    public PopException(@Nonnull final Type failureType, @Nullable final Throwable cause) {
+    public SledException(@Nonnull final Type failureType, @Nullable final Throwable cause) {
         super(failureType.toString(), cause);
     }
 
     public enum Type {
-        CONNECT_FAILURE, TIMEDOUT, PARSE_FAILURE, INVALID_STATE
+        CONNECT_FAILURE, TIMEDOUT, PARSE_FAILURE, INVALID_STATE, INTERNAL_FAILURE
     }
 
 }

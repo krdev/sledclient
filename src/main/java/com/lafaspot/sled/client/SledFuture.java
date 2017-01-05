@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.lafaspot.pop.session;
+package com.lafaspot.sled.client;
 
 
 import java.util.concurrent.CancellationException;
@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * @author kraman
  *
  */
-public class PopFuture<V> implements Future<V> {
+public class SledFuture<V> implements Future<V> {
 
         /** Is this future task done? */
         private final AtomicBoolean isDone = new AtomicBoolean(false);
@@ -39,7 +39,7 @@ public class PopFuture<V> implements Future<V> {
      *
      * @param future the future object
      * */
-    public PopFuture(@Nonnull Future future) {
+    public SledFuture(@Nonnull Future future) {
         this.future = future;
     }
 
@@ -50,6 +50,7 @@ public class PopFuture<V> implements Future<V> {
          *
          * @return true if Future was cancelled
          */
+        @Override
         public boolean isCancelled() {
             // TODO
             return false;
@@ -60,6 +61,7 @@ public class PopFuture<V> implements Future<V> {
          *
          * @return true if task is complete
          */
+        @Override
         public boolean isDone() {
             return isDone.get();
         }
@@ -70,14 +72,14 @@ public class PopFuture<V> implements Future<V> {
          * @param result the result to be set
          */
     protected void done(@Nonnull final V result) {
-            synchronized (lock) {
-                if (!isDone.get()) {
-                        resultRef.set(result);
-                        isDone.set(true);
-                    }
-                }
-                lock.notify();
+        synchronized (lock) {
+            if (!isDone.get()) {
+                resultRef.set(result);
+                isDone.set(true);
             }
+            lock.notify();
+        }
+    }
 
 
         /**
@@ -103,6 +105,7 @@ public class PopFuture<V> implements Future<V> {
          * @throws InterruptedException on failure
          * @throws ExecutionException on failure
          */
+    @Override
     public V get() throws InterruptedException, ExecutionException {
             synchronized (lock) {
                 while (!isDone.get()) {
@@ -127,8 +130,8 @@ public class PopFuture<V> implements Future<V> {
          * @param unit unit value for timeout
          * @throws InterruptedException on failure
          * @throws ExecutionException on failure
-         * @throws TimeoutException when timeout has expired
          */
+    @Override
     public V get(final long timeout, @Nonnull final TimeUnit unit) throws InterruptedException, ExecutionException
                  {
             synchronized (lock) {
@@ -152,6 +155,7 @@ public class PopFuture<V> implements Future<V> {
 
 
 
+        @Override
         public boolean cancel(boolean mayInterruptIfRunning) {
             // TODO Auto-generated method stub
             return false;
